@@ -11,6 +11,20 @@ if (!isset($_SESSION['user_id'])) {
 
 // Tampilkan halaman berdasarkan role user
 $page = isset($_GET['page']) ? $_GET['page'] : 'dashboard';
+$role = $_SESSION['user_role'];
+
+// Definisi akses halaman berdasarkan role
+$allowed_pages = [
+    'administrator' => ['dashboard', 'menu', 'meja'],
+    'owner' => ['dashboard', 'transaksi', 'pelanggan'],
+    'kasir' => ['dashboard', 'transaksi'],
+    'waiter' => ['dashboard', 'pesanan', 'meja']
+];
+
+// Cek apakah user memiliki akses ke halaman yang diminta
+if (!in_array($page, $allowed_pages[$role])) {
+    $page = 'dashboard'; // Redirect ke dashboard jika tidak memiliki akses
+}
 
 // Header
 include 'views/templates/header.php';

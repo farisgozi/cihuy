@@ -48,21 +48,47 @@ if (!isset($_SESSION['user_id'])) {
                     <a href="index.php" class="<?php echo $page == 'dashboard' ? 'active' : ''; ?>">
                         <i class="bi bi-speedometer2"></i> Dashboard
                     </a>
-                    <a href="index.php?page=menu" class="<?php echo $page == 'menu' ? 'active' : ''; ?>">
-                        <i class="bi bi-menu-button-wide"></i> Menu
-                    </a>
-                    <a href="index.php?page=meja" class="<?php echo $page == 'meja' ? 'active' : ''; ?>">
-                        <i class="bi bi-table"></i> Meja
-                    </a>
-                    <a href="index.php?page=pesanan" class="<?php echo $page == 'pesanan' ? 'active' : ''; ?>">
-                        <i class="bi bi-cart"></i> Pesanan
-                    </a>
-                    <a href="index.php?page=transaksi" class="<?php echo $page == 'transaksi' ? 'active' : ''; ?>">
-                        <i class="bi bi-cash"></i> Transaksi
-                    </a>
-                    <a href="index.php?page=pelanggan" class="<?php echo $page == 'pelanggan' ? 'active' : ''; ?>">
-                        <i class="bi bi-people"></i> Pelanggan
-                    </a>
+                    <?php
+                    switch($_SESSION['user_role']) {
+                        case 'administrator':
+                            ?>
+                            <a href="index.php?page=menu" class="<?php echo $page == 'menu' ? 'active' : ''; ?>">
+                                <i class="bi bi-menu-button-wide"></i> Menu
+                            </a>
+                            <a href="index.php?page=meja" class="<?php echo $page == 'meja' ? 'active' : ''; ?>">
+                                <i class="bi bi-table"></i> Meja
+                            </a>
+                            <?php
+                            break;
+                        case 'owner':
+                            ?>
+                            <a href="index.php?page=transaksi" class="<?php echo $page == 'transaksi' ? 'active' : ''; ?>">
+                                <i class="bi bi-cash"></i> Transaksi
+                            </a>
+                            <a href="index.php?page=pelanggan" class="<?php echo $page == 'pelanggan' ? 'active' : ''; ?>">
+                                <i class="bi bi-people"></i> Pelanggan
+                            </a>
+                            <?php
+                            break;
+                        case 'kasir':
+                            ?>
+                            <a href="index.php?page=transaksi" class="<?php echo $page == 'transaksi' ? 'active' : ''; ?>">
+                                <i class="bi bi-cash"></i> Transaksi
+                            </a>
+                            <?php
+                            break;
+                        case 'waiter':
+                            ?>
+                            <a href="index.php?page=pesanan" class="<?php echo $page == 'pesanan' ? 'active' : ''; ?>">
+                                <i class="bi bi-cart"></i> Pesanan
+                            </a>
+                            <a href="index.php?page=meja" class="<?php echo $page == 'meja' ? 'active' : ''; ?>">
+                                <i class="bi bi-table"></i> Meja
+                            </a>
+                            <?php
+                            break;
+                    }
+                    ?>
                 </nav>
             </div>
 

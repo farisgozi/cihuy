@@ -1,7 +1,7 @@
 <?php
 class Database {
     private $host = 'localhost';
-    private $db_name = 'db_kasir_resto_pdm_strict';
+    private $db_name = 'db_kasir';
     private $username = 'root';
     private $password = '';
     private $conn;

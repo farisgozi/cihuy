@@ -106,5 +106,10 @@ class Menu {
         
         return $stmt->execute();
     }
+
+    // Alias untuk getAll()
+    public function read() {
+        return $this->getAll();
+    }
 }
 ?>

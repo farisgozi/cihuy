@@ -102,5 +102,8 @@ class Meja {
         
         return $stmt->execute();
     }
+    public function read() {
+        return $this->getAll();
+    }
 }
 ?>

@@ -5,8 +5,6 @@ class User {
 
     public $id_user;
     public $nama_user;
-    public $username;
-    public $password;
     public $role;
 
     public function __construct($db) {

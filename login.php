@@ -12,16 +12,16 @@ $error = '';
 
 // Proses login
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $username = $_POST['username'] ?? '';
-    $password = $_POST['password'] ?? '';
+    $nama_user = $_POST['nama_user'] ?? '';
+    $id_user = $_POST['id_user'] ?? '';
 
     // Koneksi database
     $database = new Database();
     $db = $database->getConnection();
 
-    // Cek kredensial user (implementasi sederhana)
-    $stmt = $db->prepare("SELECT * FROM users WHERE nama_user = ?");
-    $stmt->execute([$username]);
+    // Cek kredensial user berdasarkan nama_user dan id_user
+    $stmt = $db->prepare("SELECT * FROM users WHERE nama_user = ? AND id_user = ?");
+    $stmt->execute([$nama_user, $id_user]);
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
     // Untuk implementasi sederhana, kita gunakan nama_user sebagai username
@@ -30,10 +30,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['user_id'] = $user['id_user'];
         $_SESSION['user_name'] = $user['nama_user'];
         
+        // Set role berdasarkan id_user
+        $role = '';
+        switch($user['id_user']) {
+            case 1:
+                $role = 'administrator';
+                break;
+            case 2:
+                $role = 'owner';
+                break;
+            case 3:
+                $role = 'kasir';
+                break;
+            case 4:
+                $role = 'waiter';
+                break;
+            default:
+                $role = 'unknown';
+        }
+        $_SESSION['user_role'] = $role;
+        
         header('Location: index.php');
         exit();
     } else {
-        $error = 'Username atau password salah!';
+        $error = 'ID User atau Nama User tidak valid!';
     }
 }
 ?>
@@ -72,12 +92,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <?php endif; ?>
             <form method="POST" action="">
                 <div class="mb-3">
-                    <label for="username" class="form-label">Username</label>
-                    <input type="text" class="form-control" id="username" name="username" required>
+                    <label for="id_user" class="form-label">ID User</label>
+                    <input type="number" class="form-control" id="id_user" name="id_user" required>
                 </div>
                 <div class="mb-3">
-                    <label for="password" class="form-label">Password</label>
-                    <input type="password" class="form-control" id="password" name="password" required>
+                    <label for="nama_user" class="form-label">Nama User</label>
+                    <input type="text" class="form-control" id="nama_user" name="nama_user" required>
                 </div>
                 <button type="submit" class="btn btn-primary w-100">Login</button>
             </form>
